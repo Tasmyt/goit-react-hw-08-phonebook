@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { ItemContact } from '../ItemContact/ItemContact';
 import { getFiltredContacts } from '../../redax/selectors';
 import { fetchContacts } from 'redax/operations';
+import { selectToken } from 'redax/auth/authSelectors';
 
 const STATUS = {
 	IDLE: 'idle',
@@ -13,13 +14,16 @@ const STATUS = {
 } 
 
 export const ListContact = () => {
-  const {status, error} = useSelector((state) => state.contacts)  
+  const {status, error} = useSelector((state) => state.reducer.contacts)  
   const contactsFilter = useSelector(getFiltredContacts);
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
   
   useEffect(() => {
-    dispatch(fetchContacts()); 
-}, [dispatch]);
+    if (token) {      
+    dispatch(fetchContacts());
+  }
+}, [dispatch, token]);
   
   return (
   <>

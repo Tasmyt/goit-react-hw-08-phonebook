@@ -2,6 +2,7 @@ import  FormContact from '../../components/FormContact/FormContact';
 import { ListContact } from '../../components/ListContact/ListContact';
 import { Filter } from '../../components/Filter/Filter';
 import { Conteiner, Box } from '../../components/App.styled';
+
 export default function Phonebook() {
  
     return (
@@ -12,7 +13,7 @@ export default function Phonebook() {
         <h2>Contacts</h2>
         <Box>
         <p>Find contacts by name</p>
-        <Filter />        
+        <Filter />                
         <ListContact />
           </Box>
       </Conteiner>

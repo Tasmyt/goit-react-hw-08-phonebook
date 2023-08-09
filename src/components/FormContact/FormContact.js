@@ -5,7 +5,7 @@ import { fetchAddContact } from '../../redax/operations';
 import { Form, Lable, Input, Button } from './FormContact.styled';
 
 export default function FormContact() {
-  const contacts = useSelector(getContacts);  
+  const contacts = useSelector(getContacts);    
   const dispatch = useDispatch();
 
   const resetInput = e => {
@@ -15,18 +15,20 @@ export default function FormContact() {
       name: e.currentTarget.elements.name.value,
       number: e.currentTarget.elements.number.value,
     };
-    const findContact = contacts.find(
-      item => contact.name.toLowerCase() === item.name.toLowerCase()
-    );
-    if (findContact) {
-      return alert(`${contact.name} is already in contacts.`);
-    }
-    const findNumber = contacts.find(
-      item => contact.number.toLowerCase() === item.number.toLowerCase()
-    );
-    if (findNumber) {
-      return alert(`${contact.number} is already in use.`);
-    }
+    // if (contacts !== []) {
+      const findContact = contacts.find(
+        item => contact.name.toLowerCase() === item.name.toLowerCase()
+      );
+      if (findContact) {
+        return alert(`${contact.name} is already in contacts.`);
+      }
+      const findNumber = contacts.find(
+        item => contact.number.toLowerCase() === item.number.toLowerCase()
+      );
+      if (findNumber) {
+        return alert(`${contact.number} is already in use.`);
+      }
+    // }
     dispatch(fetchAddContact(contact));
     e.currentTarget.reset();
   };

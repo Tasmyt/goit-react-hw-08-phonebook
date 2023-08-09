@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 
 export const AppBar = () => {
 
@@ -7,11 +7,17 @@ export const AppBar = () => {
             <div>
                 <nav>
                     <div>
-                        Home
+                        <Link to="/"> 
+                            Home
+                        </Link> 
                     </div>
                     <div>
-                        <p>Registration</p>
-                        <p>Log in</p>
+                        <Link to="/register">
+                            <p>Registration</p>
+                        </Link> 
+                        <Link to="/login"> 
+                            <p>Log in</p>
+                         </Link> 
                     </div>
                 </nav>
             </div>
