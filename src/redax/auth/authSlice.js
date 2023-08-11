@@ -1,12 +1,11 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { logIn, register } from './authOperation';
+import { current, logIn, logOut, register } from './authOperation';
 
 const initialState = {
   user: { email: null, password: null },
   token: null,
   isLogin: false,
-  isLoading: false,
-  // status: false,
+  isLoading: false,  
   error: null,
 };
 const handlePending = state => {
@@ -17,7 +16,9 @@ const handlePending = state => {
 const handleRejected = (state, {payload}) => {
   state.isLoading = false;
   state.error = payload;
-  // toast
+  alert(`${payload}` === 'Network Error'
+      ? `You are registered, check your data and log in to your account`
+      : 'Something went wrong. Check your data and try again');
 };
 
 const handleFulfilled = (state, {payload}) => {
@@ -30,12 +31,22 @@ const handleFulfilled = (state, {payload}) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  
   extraReducers: builder =>
     builder
-      .addCase(register.fulfilled)
-      .addMatcher(isAnyOf(register.fulfilled, logIn.fulfilled), handleFulfilled)
-      .addMatcher(isAnyOf(register.pending, logIn.pending), handlePending)
-      .addMatcher(isAnyOf(register.rejected, logIn.rejected), handleRejected),
+      .addCase(logOut.fulfilled, () => initialState)
+      
+      .addCase(current.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLogin = true;
+        state.isLoading = false;
+      })
+      
+      .addCase(current.rejected, () => initialState)
+      .addMatcher(isAnyOf(register.fulfilled, logIn.fulfilled,), handleFulfilled)
+      .addMatcher(isAnyOf(register.pending, logIn.pending, logOut.pending, current.pending), handlePending)
+      .addMatcher(isAnyOf(register.rejected, logIn.rejected, logOut.rejected), handleRejected)
+      
 });
 
 export const authReduser = authSlice.reducer;

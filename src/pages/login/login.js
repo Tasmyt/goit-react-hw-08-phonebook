@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { logIn } from 'redax/auth/authOperation';
 import { selectIsLogin } from '../../redax/auth/authSelectors';
 import { Navigate } from 'react-router-dom';
+import { HiMail, HiLockClosed, HiEye, HiEyeOff } from 'react-icons/hi';
+import { Button, Subtitle } from 'pages/pages.styled';
+import { ButtonEye, Form, Input, Label } from 'pages/registration/Registration.styled';
 
 const initialState = {
   email: '',
@@ -13,6 +16,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const [values, setValues] = useState(initialState);
   const isLogin = useSelector(selectIsLogin);
+  const [isPassword, setIsPassword] = useState(true);
+  const [isView, setIsView] = useState(false);
 
   const handleChange = e => {
     const { value, name } = e.target;
@@ -23,44 +28,57 @@ export default function Login() {
     e.preventDefault();
 
     dispatch(
-      logIn({        
+      logIn({
         email: values.email,
         password: values.password,
       })
     );
     setValues(initialState);
-  }
-if (isLogin) {
+  };
+  if (isLogin) {
     return <Navigate to={'/contacts'} />;
   }
 
+  const Eye = () => {
+    setIsPassword(prev => !prev);
+    setIsView(prev => !prev);
+  };
+
   return (
     <section>
-      <form onSubmit={handleSubmit}>
-        <label>
-          {' '}
-          email
-          <input
-            type="text"
-            name="email"
-            placeholder="email"
-            onChange={handleChange}
-            required
-          />
-        </label>
+      <Form onSubmit={handleSubmit}>
+        <Subtitle>Log In</Subtitle>
+        <div>
+          <label>
+            {' '}
+            <HiMail />
+            <Input
+              type="text"
+              name="email"
+              placeholder="email"
+              onChange={handleChange}
+              required
+            />
+          </label>
+        </div>
 
-        <label>
-          password
-          <input
-            type="tel"
-            name="password"
-            placeholder="password"
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <button type="submit">submit</button>
-      </form>
+        <div>
+          <Label>
+            <HiLockClosed />
+            <Input
+              type={isPassword ? 'password' : 'text'}
+              name="password"
+              placeholder="password"
+              onChange={handleChange}
+              required
+            />
+            <ButtonEye type="button" onClick={Eye}>
+              {isView ? <HiEye /> : <HiEyeOff />}
+            </ButtonEye>
+          </Label>
+        </div>
+        <Button type="submit">sign in</Button>
+      </Form>
     </section>
   );
 }

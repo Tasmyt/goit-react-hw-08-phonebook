@@ -2,20 +2,23 @@ import  FormContact from '../../components/FormContact/FormContact';
 import { ListContact } from '../../components/ListContact/ListContact';
 import { Filter } from '../../components/Filter/Filter';
 import { Conteiner, Box } from '../../components/App.styled';
+import { Paragraph, Title } from 'pages/pages.styled';
 
 export default function Phonebook() {
- 
-    return (
+  
+  return (
+    <>      
       <Conteiner>
-        <h1>Phonebook</h1>
+        <Title>Phonebook</Title>
         <FormContact  />
 
-        <h2>Contacts</h2>
+        <Paragraph>Contacts</Paragraph>
         <Box>
         <p>Find contacts by name</p>
         <Filter />                
         <ListContact />
-          </Box>
+        </Box>
       </Conteiner>
+    </>
     );
   }

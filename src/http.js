@@ -12,8 +12,7 @@ export const token = {
   set: (data) => {
     privateApi.defaults.headers.Authorization = `Bearer ${data}`;
   },
-
   remove: () => {
-    privateApi.defaults.headers.Authorization = null;
+    privateApi.defaults.headers.Authorization = '';
   },
 };

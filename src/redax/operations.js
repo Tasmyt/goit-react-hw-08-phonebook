@@ -4,8 +4,6 @@ import { privateApi } from 'http';
 import { token } from 'http';
 import { selectToken } from './auth/authSelectors';
 
-// axios.defaults.baseURL = 'https://64cb41cf700d50e3c70599e8.mockapi.io';
-
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, {getState, rejectWithValue }) => {

@@ -1,26 +1,44 @@
-import { Link } from 'react-router-dom';
+import { Button, Paragraph, Sending } from 'pages/pages.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from 'redax/auth/authOperation';
+import { selectToken, selectUser } from 'redax/auth/authSelectors';
+import { HiHome } from 'react-icons/hi';
+import { BoxBar, UserBar } from './AppBar.styled';
 
 export const AppBar = () => {
-
-    return (
-        <section>
-            <div>
-                <nav>
-                    <div>
-                        <Link to="/"> 
-                            Home
-                        </Link> 
-                    </div>
-                    <div>
-                        <Link to="/register">
-                            <p>Registration</p>
-                        </Link> 
-                        <Link to="/login"> 
-                            <p>Log in</p>
-                         </Link> 
-                    </div>
-                </nav>
-            </div>
-        </section>
-    )
-}
+  const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const onLogout = () => {
+    dispatch(logOut());
+  };
+  return (
+    <section>
+      <nav>
+        <BoxBar>
+          <div>
+            
+            <Sending to="/"><HiHome />Home</Sending>
+          </div>
+          <div>
+            {!token ? (
+              <UserBar>
+                <Sending to="/register">Registration</Sending>
+                <Sending to="/login">Log in</Sending>
+              </UserBar>
+            ) : (
+              <>
+                <UserBar>
+                  <Paragraph>Welkom {`${user.name}`}</Paragraph>
+                  <Button type="button" onClick={onLogout}>
+                    logOut
+                  </Button>
+                </UserBar>
+              </>
+            )}
+          </div>
+        </BoxBar>
+      </nav>
+    </section>
+  );
+};
