@@ -17,7 +17,7 @@ export default function Home() {
       ) : (
           <>
             <BoxHome>
-          <Title>Wellcome to you PhoneBook</Title>
+          <Title>Welcome to you PhoneBook</Title>
               <Subtitle>Please register or login to your account to use PhoneBook</Subtitle>
               </BoxHome>
         </>

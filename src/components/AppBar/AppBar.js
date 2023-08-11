@@ -29,7 +29,7 @@ export const AppBar = () => {
             ) : (
               <>
                 <UserBar>
-                  <Paragraph>Welkom {`${user.name}`}</Paragraph>
+                  <Paragraph>Welcome {`${user.name}`}</Paragraph>
                   <Button type="button" onClick={onLogout}>
                     logOut
                   </Button>
